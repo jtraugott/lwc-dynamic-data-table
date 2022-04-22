@@ -1,0 +1,116 @@
+<template>
+    <lightning-card>
+        <div class="slds-p-around_x-small">
+            <table data-target-id="dynamicTable" class="slds-table slds-table_cell-buffer slds-table_bordered">
+                <thead>
+                    <tr class="">
+                        <th class="slds-size_3-of-10" scope="col">
+                            <div class="slds-truncate" title="Lease Payment Number">Lease Payment Number</div>
+                        </th>
+                        <th class="slds-size_3-of-10" scope="col">
+                            <div class="slds-truncate" title="Effective Date">Effective Date</div>
+                        </th>
+                        <th class="slds-size_3-of-10" scope="col">
+                            <div class="slds-truncate" title="Payment Amount">Payment Amount</div>
+                        </th>
+                        <th class="slds-size_3-of-10" scope="col">
+                            <div class="slds-truncate" title="Payment Frequency">Payment Frequency</div>
+                        </th>
+                        <th class="slds-size_1-of-10" scope="col">
+                            <div class="slds-truncate" title="Action"></div>
+                        </th>
+                        <th class="slds-size_1-of-10" scope="col">
+                            <div class="slds-truncate" title="Action"></div>
+                        </th>
+                        <th class="slds-size_1-of-10" scope="col">
+                            <div class="slds-truncate" title="Action"></div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template iterator:it={data}>
+                        <tr data-target-id={it.value.rowId} key={it.value.rowId} class="slds-hint-parent">
+                            <td class="slds-size_3-of-10" data-label="name">
+                                <div data-target-id="name">
+                                    <template if:false={it.value.canEdit}>{it.value.name}</template>
+                                    <template if:true={it.value.canEdit}>{it.value.name}</template>
+                                </div>
+                            </td>
+                            <td class="slds-size_3-of-10" data-label="startDate">
+                                <div data-target-id="startDate">
+                                    <template if:false={it.value.canEdit}>{it.value.startDate}</template>
+                                    <template if:true={it.value.canEdit}>
+                                        <input type="date" onchange={handleInputChange}>
+                                    </template>
+                                </div>
+                            </td>
+                            <td class="slds-size_3-of-10" data-label="payment">
+                                <div data-target-id="payment">
+                                    <template if:false={it.value.canEdit}>{it.value.payment}</template>
+                                    <template if:true={it.value.canEdit}>
+                                        <input type="number" onchange={handleInputChange}>
+                                    </template>
+                                </div>
+                            </td>
+                            <td class="slds-size_3-of-10" data-label="frequency">
+                                <div data-target-id="frequency">
+                                    <template if:false={it.value.canEdit}>
+                                        {it.value.frequency}
+                                    </template>
+                                    <template if:true={it.value.canEdit}>
+                                        <input type="text" onchange={handleInputChange}>
+                                    </template>
+                                </div>
+                            </td>
+                            <td class="slds-size_3-of-10" data-label="canEdit" style="display:none;">
+                                <div data-target-id="canEdit">
+                                    {it.value.canEdit}
+                                </div>
+                            </td>
+                            <td class="slds-size_3-of-10" data-label="canDelete" style="display:none;">
+                                <div data-target-id="canDelete">
+                                    {it.value.canDelete}
+                                </div>
+                            </td>
+                            <td class="slds-size_1-of-10" data-label="actions">
+                                <template if:false={it.value.canEdit}>
+                                </template>
+                                <template if:true={it.value.canEdit}>
+                                    <a name={it.value.rowId} data-id={it.value.Id} data-target-id="submit"
+                                        onclick={handleRowSubmit}>
+                                        <lightning-icon icon-name="utility:check" alternative-text="submit"
+                                            size="small"></lightning-icon>
+                                    </a>
+                                </template>
+                            </td>
+                            <td class="slds-size_1-of-10" data-label="actions">
+                                <template if:false={it.value.canEdit}>
+                                </template>
+                                <template if:true={it.value.canDelete}>
+                                    <a name={it.value.rowId} data-id={it.value.Id} data-target-id="delete"
+                                        onclick={handleRowDelete}>
+                                        <lightning-icon icon-name="utility:delete" alternative-text="delete"
+                                            size="small"></lightning-icon>
+                                    </a>
+                                </template>
+                            </td>
+                            <td class="slds-size_1-of-10" data-label="actions">
+                                <template if:false={it.value.canEdit}>
+                                </template>
+                                <template if:true={it.last}>
+                                    <template if:false={it.value.canEdit}>
+                                        <a name={it.value.rowId} data-id={it.value.Id} data-target-id="add"
+                                            onclick={handleRowAdd}>
+                                            <lightning-icon icon-name="utility:add" alternative-text="add" size="small">
+                                            </lightning-icon>
+                                        </a>
+                                    </template>
+                                </template>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </div>
+    </lightning-card>
+</template>
